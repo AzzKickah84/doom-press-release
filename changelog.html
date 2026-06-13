@@ -85,10 +85,33 @@
 <body>
   <header>
     <h1>DOOM Windows Port</h1>
-    <p class="subtitle">Changelog &mdash; current release <strong>3.0.5</strong> &mdash; port by Thijs Boekholt</p>
+    <p class="subtitle">Changelog &mdash; current release <strong>3.0.6</strong> &mdash; port by Thijs Boekholt</p>
   </header>
 
   <main>
+    <section>
+      <div class="release-header">
+        <span class="version">Version 3.0.6</span>
+        <span class="date">12 June 2026</span>
+      </div>
+      <div class="release-body">
+        <h2>Added</h2>
+        <ul>
+          <li><strong>In-game score overlay</strong> &mdash; hold the <code>`</code> key (default) during deathmatch or co-op to show live standings: frag matrix or totals in deathmatch, kills/items/secrets per player in co-op. Rebind under Options &rarr; Setup &rarr; Controls &rarr; SHOW SCORES; saved as <code>key_scores</code> in your config.</li>
+        </ul>
+        <h2>Fixed</h2>
+        <ul>
+          <li><strong>Deathmatch map items in bot DM</strong> &mdash; weapons and pickups placed with the WAD editor&rsquo;s multiplayer/deathmatch-only flag (thing options bit 16) now spawn in offline VS CPU deathmatch. Previously they were skipped because <code>netgame</code> is false for local bot games even when <code>deathmatch</code> is active.</li>
+        </ul>
+        <h2>Build</h2>
+        <ul>
+          <li>Full installer: <code>DOOM-Setup-3.0.6.exe</code> (all WADs from the build folder).</li>
+          <li>Shareware installer: <code>DOOM-Setup-3.0.6s.exe</code> (doom1.wad only).</li>
+          <li>Windows file version metadata bumped to 3.0.6 on all executables.</li>
+        </ul>
+      </div>
+    </section>
+
     <section>
       <div class="release-header">
         <span class="version">Version 3.0.5</span>
