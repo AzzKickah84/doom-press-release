@@ -1167,28 +1167,32 @@
 
   <script>
   (function () {
-    var STORAGE_KEY = "doom_press_release_visits_v2";
-    var SEED = 0;
+    var SITE = "azzkickah84.github.io";
+    var PATH = "/doom-press-release/";
     var PAD = 7;
     var el = document.getElementById("visitor-count");
     if (!el) return;
 
-    var count = SEED;
-    try {
-      var stored = localStorage.getItem(STORAGE_KEY);
-      count = stored ? parseInt(stored, 10) : SEED;
-      if (isNaN(count) || count < SEED) count = SEED;
-      count += 1;
-      localStorage.setItem(STORAGE_KEY, String(count));
-    } catch (err) {
-      count = SEED + 1;
+    function render(count) {
+      var n = parseInt(count, 10);
+      if (isNaN(n) || n < 0) n = 0;
+      el.textContent = String(n).padStart(PAD, "0");
+      el.classList.add("tick");
+      el.addEventListener("animationend", function () {
+        el.classList.remove("tick");
+      }, { once: true });
     }
 
-    el.textContent = String(count).padStart(PAD, "0");
-    el.classList.add("tick");
-    el.addEventListener("animationend", function () {
-      el.classList.remove("tick");
-    }, { once: true });
+    function loadViews() {
+      fetch("https://page-views-api.ratneshc.com/api/v1/views?site=" + encodeURIComponent(SITE) + "&path=" + encodeURIComponent(PATH))
+        .then(function (r) { return r.json(); })
+        .then(function (data) { render(data.views); })
+        .catch(function () { render(0); });
+    }
+
+    fetch("https://page-views-api.ratneshc.com/api/v1/track?site=" + encodeURIComponent(SITE) + "&path=" + encodeURIComponent(PATH), { keepalive: true })
+      .then(loadViews)
+      .catch(loadViews);
   })();
   </script>
 
