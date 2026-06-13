@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Self-contained press release: CSS inline, DOOM logo embedded as base64. Open this one file in any browser; no other assets needed. -->
+  <title>BREAKING: The Ultimate DOOM Arrives — Built-In Map Editor, CTF, Mouse-Look &amp; More</title>
+<style>
+    :root {
+      --hell-red: #cc0000;
+      --blood: #8b0000;
+      --ember: #ff3300;
+      --gold: #ffb840;
+      --bone: #e8dcc8;
+      --ash: #1a1410;
+      --smoke: #2a2220;
+      --panel: #1e1816;
+      --green-hud: #6abf2a;
+      --cyan-hud: #40c8d8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background: var(--ash);
+      color: var(--bone);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* CRT overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.12) 0px,
+        rgba(0,0,0,0.12) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      opacity: 0.35;
+    }
+
+    .ticker {
+      background: var(--hell-red);
+      color: #fff;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.78rem;
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: scroll-ticker 40s linear infinite;
+      padding-left: 100%;
+    }
+
+    @keyframes scroll-ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .masthead {
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(204,0,0,0.45) 0%, transparent 60%),
+        linear-gradient(180deg, #120808 0%, var(--ash) 100%);
+      border-bottom: 4px double var(--hell-red);
+      padding: 28px 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .masthead::before,
+    .masthead::after {
+      content: "☠";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      opacity: 0.25;
+    }
+    .masthead::before { left: 24px; }
+    .masthead::after { right: 24px; }
+
+    .paper-name {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: clamp(0.65rem, 2vw, 0.85rem);
+      letter-spacing: 0.45em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .doom-logo {
+      display: block;
+      width: min(420px, 88vw);
+      height: auto;
+      margin: 0 auto 12px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      filter: drop-shadow(0 0 18px rgba(255, 60, 0, 0.45))
+              drop-shadow(0 4px 0 #000)
+              drop-shadow(0 8px 16px rgba(0, 0, 0, 0.85));
+    }
+
+    .paper-tagline {
+      font-style: italic;
+      color: #a09080;
+      font-size: 0.95rem;
+    }
+
+    .visitor-counter {
+      margin-top: 18px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .counter-label {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      color: #3d5c28;
+      text-transform: uppercase;
+    }
+
+    .counter-display {
+      background: linear-gradient(180deg, #060a06 0%, #0c140a 100%);
+      border: 3px solid #1a2818;
+      border-radius: 6px;
+      padding: 10px 16px 8px;
+      box-shadow:
+        inset 0 2px 10px rgba(0, 0, 0, 0.95),
+        inset 0 -1px 0 rgba(57, 255, 20, 0.08),
+        0 0 12px rgba(57, 255, 20, 0.12);
+      position: relative;
+    }
+
+    .counter-display::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(57, 255, 20, 0.06);
+      border-radius: 3px;
+      pointer-events: none;
+    }
+
+    .counter-digits {
+      font-family: "DSEG7 Classic", Consolas, "Courier New", monospace;
+      font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+      font-weight: 700;
+      color: #39ff14;
+      letter-spacing: 0.14em;
+      line-height: 1;
+      text-shadow:
+        0 0 6px rgba(57, 255, 20, 1),
+        0 0 14px rgba(57, 255, 20, 0.65),
+        0 0 28px rgba(57, 255, 20, 0.25);
+      font-variant-numeric: tabular-nums;
+      animation: counter-glow 2.8s ease-in-out infinite;
+    }
+
+    @keyframes counter-glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.92; }
+    }
+
+    .counter-digits.tick {
+      animation: counter-tick 0.18s ease-out;
+    }
+
+    @keyframes counter-tick {
+      0% { transform: scaleY(1.08); filter: brightness(1.35); }
+      100% { transform: scaleY(1); filter: brightness(1); }
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px 32px;
+      padding: 14px 24px;
+      background: var(--smoke);
+      border-bottom: 1px solid #3a3028;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.8rem;
+      color: #908070;
+    }
+
+    .meta-bar strong { color: var(--gold); }
+
+    .breaking {
+      display: inline-block;
+      background: var(--ember);
+      color: #fff;
+      padding: 2px 10px;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      animation: pulse-badge 1.5s ease-in-out infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,80,0,0.7); }
+      50% { box-shadow: 0 0 16px 4px rgba(255,80,0,0.4); }
+    }
+
+    .article-wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .headline {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .headline em {
+      font-style: normal;
+      color: var(--ember);
+    }
+
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 24px;
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+      border-bottom: 2px solid #3a2820;
+      font-size: 0.9rem;
+      color: #a09080;
+    }
+
+    .byline .author { color: var(--gold); font-weight: 700; }
+
+    .lede {
+      font-size: 1.2rem;
+      color: #f0e8d8;
+      margin-bottom: 28px;
+      border-left: 4px solid var(--hell-red);
+      padding-left: 20px;
+    }
+
+    .lede::first-letter {
+      float: left;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 4.2rem;
+      line-height: 0.85;
+      color: var(--hell-red);
+      margin: 4px 12px 0 0;
+      text-shadow: 0 0 12px rgba(255,0,0,0.5);
+    }
+
+    .pull-quote {
+      float: right;
+      width: min(280px, 40%);
+      margin: 0 0 20px 28px;
+      padding: 20px;
+      background: linear-gradient(135deg, #2a1010, #1a0808);
+      border: 2px solid var(--hell-red);
+      border-radius: 4px;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.4;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    p { margin-bottom: 1.2em; }
+
+    h2.section-head {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--hell-red);
+      margin: 48px 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #4a3028;
+      clear: both;
+    }
+
+    /* Mock screenshot frames */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 32px 0;
+    }
+
+    .shot {
+      background: #000;
+      border: 3px solid #3a2820;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .shot:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 16px 48px rgba(204,0,0,0.25);
+      border-color: var(--hell-red);
+    }
+
+    .shot-canvas {
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shot-label {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.72rem;
+      padding: 8px 12px;
+      background: var(--panel);
+      color: var(--gold);
+      border-top: 1px solid #3a2820;
+    }
+
+    /* In-game mock */
+    .mock-game {
+      background: linear-gradient(180deg, #1a1028 0% 35%, #3a2818 35% 65%, #2a1810 65% 100%);
+    }
+
+    .mock-game .wall-left {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 35%;
+      background: linear-gradient(90deg, #5a4030, #3a2818);
+      clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
+    }
+
+    .mock-game .wall-right {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 35%;
+      background: linear-gradient(270deg, #4a3020, #2a1810);
+      clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
+    }
+
+    .mock-game .enemy {
+      position: absolute;
+      left: 50%; top: 42%;
+      transform: translateX(-50%);
+      width: 48px; height: 64px;
+      background: radial-gradient(ellipse, #6a2020 30%, #3a0808 70%);
+      border-radius: 50% 50% 40% 40%;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+    }
+
+    .mock-game .enemy::before {
+      content: "";
+      position: absolute;
+      top: 18px; left: 10px;
+      width: 8px; height: 8px;
+      background: #ff4400;
+      border-radius: 50%;
+      box-shadow: 22px 0 0 #ff4400;
+    }
+
+    .mock-game .crosshair {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px; height: 20px;
+    }
+
+    .mock-game .crosshair::before,
+    .mock-game .crosshair::after {
+      content: "";
+      position: absolute;
+      background: rgba(180,180,180,0.8);
+    }
+
+    .mock-game .crosshair::before {
+      left: 50%; top: 2px; bottom: 2px;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+
+    .mock-game .crosshair::after {
+      top: 50%; left: 2px; right: 2px;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .mock-game .hud-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 18%;
+      background: linear-gradient(180deg, #4a3020, #2a1810);
+      border-top: 3px solid #6a5040;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 16px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.55rem;
+      color: var(--green-hud);
+    }
+
+    .mock-game .radar {
+      position: absolute;
+      bottom: 22%; left: 8px;
+      width: 64px; height: 64px;
+      background: #1a2818;
+      border: 2px solid #3a5030;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .mock-game .radar::after {
+      content: "";
+      position: absolute;
+      inset: 30%;
+      background: #ffcc00;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #fff;
+    }
+
+    .mock-game .radar-line {
+      position: absolute;
+      inset: 0;
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(80,200,80,0.3) 30deg, transparent 60deg);
+      animation: radar-sweep 3s linear infinite;
+    }
+
+    @keyframes radar-sweep {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Forge mock */
+    .mock-forge {
+      background: #c0c0c0;
+      display: grid;
+      grid-template-rows: 28px 1fr 24px;
+    }
+
+    .mock-forge .titlebar {
+      background: linear-gradient(180deg, #000080, #000060);
+      color: #fff;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.6rem;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 6px;
+    }
+
+    .mock-forge .titlebar span {
+      width: 10px; height: 10px;
+      background: #c0c0c0;
+      border: 1px solid #808080;
+    }
+
+    .mock-forge .workspace {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      gap: 4px;
+      padding: 4px;
+      background: #808080;
+    }
+
+    .mock-forge .map {
+      background: #fff;
+      position: relative;
+      border: 2px inset #c0c0c0;
+    }
+
+    .mock-forge .map .room {
+      position: absolute;
+      border: 2px solid #cc0000;
+      background: rgba(200,200,255,0.3);
+    }
+
+    .mock-forge .map .room:nth-child(1) { left: 15%; top: 20%; width: 35%; height: 40%; }
+    .mock-forge .map .room:nth-child(2) { left: 45%; top: 35%; width: 30%; height: 35%; }
+    .mock-forge .map .room:nth-child(3) { left: 25%; top: 55%; width: 25%; height: 25%; }
+
+    .mock-forge .map .thing {
+      position: absolute;
+      width: 8px; height: 8px;
+      background: #00aa00;
+      border-radius: 50%;
+    }
+
+    .mock-forge .map .thing:nth-child(4) { left: 30%; top: 38%; }
+    .mock-forge .map .thing:nth-child(5) { left: 55%; top: 48%; background: #aa0000; }
+    .mock-forge .map .thing:nth-child(6) { left: 38%; top: 65%; background: #aaaa00; }
+
+    .mock-forge .palette {
+      background: #c0c0c0;
+      border: 2px inset #c0c0c0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      padding: 4px;
+      font-size: 0.45rem;
+      text-align: center;
+      color: #000;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .mock-forge .palette div {
+      background: #fff;
+      border: 1px solid #808080;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mock-forge .statusbar {
+      background: #c0c0c0;
+      border-top: 2px outset #c0c0c0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.5rem;
+      color: #000;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Launcher mock */
+    .mock-launcher {
+      background: linear-gradient(180deg, #941400, #480800 40%, #3a2e22 40%);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mock-launcher .logo {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: #ff8800;
+      text-shadow: 2px 2px 0 #000;
+      letter-spacing: 0.15em;
+    }
+
+    .mock-launcher .panel {
+      background: rgba(60,46,34,0.9);
+      border: 2px solid #785838;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.55rem;
+      color: #ffc864;
+    }
+
+    .mock-launcher .btn-row {
+      display: flex;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .mock-launcher .btn {
+      flex: 1;
+      background: linear-gradient(180deg, #c42000, #801000);
+      border: 2px solid #ff6040;
+      color: #ffd080;
+      text-align: center;
+      padding: 6px 4px;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      border-radius: 3px;
+    }
+
+    /* CTF mock */
+    .mock-ctf {
+      background: linear-gradient(180deg, #0a0a18, #1a1028);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .mock-ctf .scoreboard {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      text-align: center;
+      width: 100%;
+    }
+
+    .mock-ctf .scoreboard h3 {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 12px;
+    }
+
+    .mock-ctf .teams {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .mock-ctf .team {
+      text-align: center;
+    }
+
+    .mock-ctf .team.red .flag { color: #ff3333; }
+    .mock-ctf .team.blue .flag { color: #4488ff; }
+
+    .mock-ctf .flag {
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+
+    .mock-ctf .captures {
+      font-size: 1.8rem;
+      font-weight: 900;
+    }
+
+    .mock-ctf .team.red .captures { color: #ff4444; }
+    .mock-ctf .team.blue .captures { color: #4488ff; }
+
+    .mock-ctf .vs {
+      font-size: 1.2rem;
+      color: #666;
+      align-self: center;
+    }
+
+    /* Feature cards */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .feature-card {
+      background: linear-gradient(145deg, var(--panel), #120e0c);
+      border: 1px solid #3a2820;
+      border-left: 4px solid var(--hell-red);
+      padding: 20px;
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover { border-left-color: var(--gold); }
+
+    .feature-card h3 {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #b0a090;
+      margin: 0;
+    }
+
+    .feature-card .tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.65rem;
+      background: rgba(204,0,0,0.2);
+      color: var(--ember);
+      padding: 2px 8px;
+      border: 1px solid rgba(204,0,0,0.4);
+    }
+
+    /* Stats strip */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 40px 0;
+      padding: 24px;
+      background: linear-gradient(90deg, #1a0808, #2a1010, #1a0808);
+      border: 2px solid var(--blood);
+      border-radius: 4px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat .num {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--hell-red);
+      text-shadow: 0 0 12px rgba(255,0,0,0.4);
+      line-height: 1;
+    }
+
+    .stat .label {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.7rem;
+      color: #807060;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* CTA */
+    .cta-block {
+      margin: 48px 0 0;
+      padding: 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at center, rgba(204,0,0,0.2) 0%, transparent 70%),
+        var(--panel);
+      border: 3px solid var(--hell-red);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-block::before {
+      content: "DOOM";
+      position: absolute;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 12rem;
+      font-weight: 900;
+      color: rgba(255,0,0,0.04);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-block h2 {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .cta-block p {
+      color: #a09080;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(180deg, #e02000, #900000);
+      padding: 16px 40px;
+      border: 3px solid var(--gold);
+      border-radius: 4px;
+      box-shadow: 0 4px 0 #400000, 0 8px 24px rgba(0,0,0,0.5);
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #400000, 0 12px 32px rgba(204,0,0,0.4);
+    }
+
+    .cta-version {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .sidebar-note {
+      background: #1a1410;
+      border: 1px dashed #4a3828;
+      padding: 16px;
+      margin: 28px 0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.8rem;
+      color: #807060;
+    }
+
+    .sidebar-note strong { color: var(--cyan-hud); }
+
+    footer.site-footer {
+      text-align: center;
+      padding: 32px 24px;
+      background: #0a0808;
+      border-top: 2px solid #2a1810;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.75rem;
+      color: #605040;
+    }
+
+    footer.site-footer a { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .pull-quote {
+        float: none;
+        width: 100%;
+        margin: 0 0 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      ★ UAC CONFIRMS: DOOM 3.0.3 NOW SHIPPING ★ CLASSIC DOS STARTUP CONSOLE ★ DOOM FORGE 3.1 ★ INSTALLER: DOOM-Setup-3.0.3.exe ★
+    </div>
+  </div>
+
+  <header class="masthead">
+    <div class="paper-name">Union Aerospace Corporate Wire — Special Edition</div>
+    <img class="doom-logo" src="data:image/png;base64,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" width="123" height="60" alt="DOOM">
+    <p class="paper-tagline">"If it bleeds, we can mod it." — Est. 1993, Reborn 2026</p>
+    <div class="visitor-counter" aria-label="Visitor counter">
+      <span class="counter-label">Visitors</span>
+      <div class="counter-display">
+        <span class="counter-digits" id="visitor-count">0000001</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="meta-bar">
+    <span><span class="breaking">BREAKING</span> HELL, MARS — 13 JUNE 2026</span>
+    <span>SECTION: <strong>GAMES / TECHNOLOGY</strong></span>
+    <span>EDITION: <strong>DOOM 3.0.3</strong></span>
+    <span>BY: <strong>THIJS BOEKHOLT</strong></span>
+  </div>
+
+  <article class="article-wrap">
+
+    <h1 class="headline">
+      <span class="breaking">EXCLUSIVE</span>
+      The Most Complete, Ultimate, Mind-Blowing Version of <em>DOOM</em> Ever Assembled — Now With a <em>Built-In WAD Editor</em>
+    </h1>
+
+    <div class="byline">
+      <span class="author">By Thijs Boekholt</span>
+      <span>UAC Wire Correspondent</span>
+      <span>13 June 2026 · 6:66 AM EST</span>
+      <span>7 min read · ★★★★★ Hell Rating</span>
+    </div>
+
+    <p class="lede">
+      In what industry insiders are already calling "the shot heard across Phobos," a lone developer operating out of a classified Windows laboratory has done the impossible: taken the legendary 1993 demon-slaughter simulator, bolted on a full graphical map editor, modern mouse-look, multiplayer Capture The Flag, demo recording, mouse-driven menus, customizable display resolution with optional smooth upscaling, persistent per-user settings, a complete WAD bundle including the AZZ_DOOM episode, CPU player bots for solo deathmatch and co-op, and enough quality-of-life upgrades to make a Cyberdemon weep. <strong>DOOM 3.0.3</strong> brings back the authentic DOS boot experience &mdash; watch <code>Z_Init: Init zone memory allocation daemon</code> scroll by while the game loads &mdash; and ships <strong>DOOM Forge 3.1</strong> with sector fills, undo/redo, texture search, and full map-editing polish. This is <strong>DOOM 3.0.3</strong> &mdash; and it is magnificent.
+    </p>
+
+    <blockquote class="pull-quote">
+      "We didn't just port DOOM. We gave it a workshop, a war room, and a rocket launcher with opinions."
+    </blockquote>
+
+    <p>
+      For three decades, players have accepted a brutal truth: to build custom DOOM levels, you needed external tools, arcane file formats, and the patience of a saint. That era ends now. <strong>DOOM Forge</strong> ships inside the installation — a visual WAD map editor with line drawing, sector painting, a 126-entry thing browser, texture thumbnails, and a fly-through <strong>3D Preview</strong> mode that lets you haunt your own creations before unleashing them on unsuspecting marines.
+    </p>
+
+    <p>
+      "I wanted one package," said port author <strong>Thijs Boekholt</strong>, speaking exclusively to UAC Wire between playtest sessions on E1M1. "Launch the game, edit a map, host a CTF match with your friends, tweak your controls, toggle a crosshair — all without leaving the ecosystem. If you have a legally obtained IWAD, you're armed."
+    </p>
+
+    <h2 class="section-head">■ First Look — Visual Evidence From the Front</h2>
+
+    <div class="screenshot-grid">
+      <figure class="shot">
+        <div class="shot-canvas mock-game">
+          <div class="wall-left"></div>
+          <div class="wall-right"></div>
+          <div class="enemy"></div>
+          <div class="crosshair"></div>
+          <div class="radar"><div class="radar-line"></div></div>
+          <div class="hud-bar">
+            <span>AMMO 50</span>
+            <span>HEALTH 100%</span>
+            <span>ARMOR 0%</span>
+            <span style="margin-left:auto;color:#ff8800">MOUSE-LOOK ON</span>
+          </div>
+        </div>
+        <figcaption class="shot-label">IN-GAME — Mouse-look, crosshair, radar minimap, classic HUD</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="shot-canvas mock-forge">
+          <div class="titlebar"><span></span><span></span><span></span> DOOM Forge 3.1 — E1M1_CUSTOM.WAD</div>
+          <div class="workspace">
+            <div class="map">
+              <div class="room"></div>
+              <div class="room"></div>
+              <div class="room"></div>
+              <div class="thing"></div>
+              <div class="thing"></div>
+              <div class="thing"></div>
+            </div>
+            <div class="palette">
+              <div>IMP</div><div>SGN</div><div>MED</div>
+              <div>KEY</div><div>BAR</div><div>CYB</div>
+              <div>9010</div><div>9011</div><div>+99</div>
+            </div>
+          </div>
+          <div class="statusbar">126 thing types loaded · Grid: ON · Snap: ON · Sector 3 selected</div>
+        </div>
+        <figcaption class="shot-label">DOOM FORGE — Built-in WAD editor with full thing catalog</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="shot-canvas mock-launcher">
+          <div class="logo">DOOM LAUNCHER</div>
+          <div class="panel">IWAD: doom.wad &nbsp;|&nbsp; SKILL: Ultra-Violence &nbsp;|&nbsp; MAP: E1M1</div>
+          <div class="panel">PWAD: hellfort.wad &nbsp;|&nbsp; ☑ Ally Weapon &nbsp;|&nbsp; ☑ CTF Mode</div>
+          <div class="panel">NETWORK: 4 players · Port 5029 · Renderer: OpenGL · DEMOS tab</div>
+          <div class="btn-row">
+            <div class="btn">PLAY DOOM</div>
+            <div class="btn">MAP FORGE</div>
+            <div class="btn">CHANGELOG</div>
+          </div>
+        </div>
+        <figcaption class="shot-label">DOOM LAUNCHER — IWAD/PWAD, multiplayer, video options</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="shot-canvas mock-ctf">
+          <div class="scoreboard">
+            <h3>— CTF INTERMISSION —</h3>
+            <div class="teams">
+              <div class="team red">
+                <div class="flag">🚩</div>
+                <div class="captures">5</div>
+                <div style="font-size:0.6rem;color:#ff6666">RED TEAM WINS</div>
+              </div>
+              <div class="vs">VS</div>
+              <div class="team blue">
+                <div class="flag">🚩</div>
+                <div class="captures">3</div>
+                <div style="font-size:0.6rem;color:#6688ff">BLUE TEAM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="shot-label">CAPTURE THE FLAG — Team scores, auto map restart</figcaption>
+      </figure>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">126</div><div class="label">Thing Types in Forge</div></div>
+      <div class="stat"><div class="num">42</div><div class="label">Insulting Quit Messages</div></div>
+      <div class="stat"><div class="num">3</div><div class="label">Apps in One Install</div></div>
+      <div class="stat"><div class="num">∞</div><div class="label">Demons Deserved It</div></div>
+    </div>
+
+    <h2 class="section-head">■ The Arsenal — Everything New &amp; Improved</h2>
+
+    <div class="features">
+      <div class="feature-card">
+        <h3>Classic DOS Startup Console</h3>
+        <p>Launch the game and watch the original text-mode boot sequence: startup banner, <code>V_Init</code>, <code>Z_Init: Init zone memory allocation daemon</code>, <code>R_Init: Init DOOM refresh daemon</code>, and every subsystem line &mdash; just like 1993. The console closes when play begins.</p>
+        <span class="tag">NEW IN 3.0.3</span>
+      </div>
+      <div class="feature-card">
+        <h3>DOOM Forge 3.1</h3>
+        <p>Live sector fill from floor textures, 32-step undo/redo, Ctrl+F texture search, thing rotation, upper/mid/lower wall slots, sector &amp; vertex delete, two-sided shared edges, F2 map lump rename, and correct Test-in-DOOM warp.</p>
+        <span class="tag">NEW IN 3.0.3</span>
+      </div>
+      <div class="feature-card">
+        <h3>3.0.2 Quality Pass</h3>
+        <p>Launcher No Monsters / Respawn / Fast options work again; IWAD and PWAD paths persist; renderer Auto applies on launch. Forge thing select, drag, and delete; line delete keeps sidedefs consistent. Bot deathmatch respawn crash fixed; VS CPU menu back-navigation and skill selection corrected; main-menu credit no longer overlaps Quit.</p>
+        <span class="tag">NEW IN 3.0.2</span>
+      </div>
+      <div class="feature-card">
+        <h3>Smarter Bot Combat</h3>
+        <p>Deathmatch bots rush the nearest foe, face them, and open fire &mdash; no more endless laps around each other. Aim prediction and wider firing angles make bot duels feel like real player fights.</p>
+        <span class="tag">NEW IN 3.0.1</span>
+      </div>
+      <div class="feature-card">
+        <h3>Bots Use the Whole Map</h3>
+        <p>Co-op and deathmatch bots pick up keys, health, armor, ammo, and weapons they need. They press switches and doors to progress, hunt monsters without line-of-sight, and follow you through the level.</p>
+        <span class="tag">NEW IN 3.0.1</span>
+      </div>
+      <div class="feature-card">
+        <h3>DOOM 3.0 — Major Release</h3>
+        <p>The 2.x feature line graduates to version 3: CPU bots, DOOM Forge, CTF, demo recording, persistent settings, full WAD bundle, mouse-look, and the complete launcher experience ship under one major version number.</p>
+        <span class="tag">NEW IN 3.0.0</span>
+      </div>
+      <div class="feature-card">
+        <h3>Aggressive CPU Bot AI</h3>
+        <p>Deathmatch bots hunt the nearest enemy, chase through the map even without line-of-sight, and fire only when they have a clear shot. Players respawn after death in bot deathmatch — no more stalemates behind cover.</p>
+        <span class="tag">IMPROVED IN 3.0.0</span>
+      </div>
+      <div class="feature-card">
+        <h3>Launcher Layout Fix</h3>
+        <p>Footer buttons no longer overlap Game tab controls. PLAY DOOM, MAP FORGE, CHANGELOG, and ABOUT sit below the tallest tab content — including CPU player options, resolution, and video renderer settings.</p>
+        <span class="tag">FIXED IN 3.0.0</span>
+      </div>
+      <div class="feature-card">
+        <h3>CPU Player Bots</h3>
+        <p>Finally, deathmatch without waiting for dial-up. Add 1&ndash;3 computer opponents for offline fragfests on any map with deathmatch spawns, or bring co-op allies that shoot demons and follow you through the campaign. Full player slots with weapons, strafing, and aim — not monster retextures.</p>
+        <span class="tag">NEW IN 2.0.14</span>
+      </div>
+      <div class="feature-card">
+        <h3>VS CPU — Main Menu &amp; Launcher</h3>
+        <p>Title menu: <strong>VS CPU PLAYERS</strong> &rarr; Deathmatch or Co-op &rarr; pick 1&ndash;3 bots &rarr; skill &amp; map. Launcher Game tab: enable <strong>CPU players</strong>, set mode, count, and skill before you launch. Flags: <code>-bots 2 -deathmatch</code> or <code>-bots 1 -botcoop</code>.</p>
+        <span class="tag">NEW IN 2.0.14</span>
+      </div>
+      <div class="feature-card">
+        <h3>Settings That Stick</h3>
+        <p>Controls, display options, and key bindings save to <code>%LOCALAPPDATA%\DOOM\default.cfg</code> — your personal profile, not the install folder. Reinstall or run from Program Files without losing your layout. Existing configs in the game folder migrate automatically.</p>
+        <span class="tag">NEW IN 2.0.13</span>
+      </div>
+      <div class="feature-card">
+        <h3>Complete WAD Bundle</h3>
+        <p>The installer ships every <code>*.wad</code> from the build folder — IWADs, PWADs, and extras like <code>doom_extra.wad</code>. No more hunting for add-on maps after setup.</p>
+        <span class="tag">NEW IN 2.0.13</span>
+      </div>
+      <div class="feature-card">
+        <h3>AZZ_DOOM Episode</h3>
+        <p>The UAC Territory Breakout episode (<code>AZZ.WAD</code>, <code>AZZ_DOOM.WAD</code>, <code>AZZ_DOOM.TXT</code>) is included in the installer with a Start Menu readme shortcut. Load the PWAD from the launcher and dive in.</p>
+        <span class="tag">NEW IN 2.0.13</span>
+      </div>
+      <div class="feature-card">
+        <h3>Custom Display Resolution</h3>
+        <p>Eight window-size presets from classic <code>320&times;200</code> up to <code>2560&times;1600</code>. Set in Options &rarr; Display or from the launcher Game tab. The game still renders at authentic 320&times;200; your chosen size controls how large the window appears on screen.</p>
+        <span class="tag">NEW IN 2.0.12</span>
+      </div>
+      <div class="feature-card">
+        <h3>Texture Filter (Sharp / Smooth)</h3>
+        <p>Choose pixel-perfect <em>Sharp</em> upscaling or <em>Smooth</em> linear filtering when the framebuffer is stretched. Best results with OpenGL or Direct3D presentation. Toggle in Options &rarr; Display or the launcher.</p>
+        <span class="tag">NEW IN 2.0.12</span>
+      </div>
+      <div class="feature-card">
+        <h3>Demo Record &amp; Playback</h3>
+        <p>Record your runs from the main menu or launcher — saved as <code>.lmp</code> files in the install folder. Play back demos from a slot list. Press Q to stop recording. Launcher Demos tab adds, removes, and renames demo files before launch.</p>
+        <span class="tag">NEW IN 2.0.11</span>
+      </div>
+      <div class="feature-card">
+        <h3>Mouse-Driven Menus</h3>
+        <p>Point-and-click every in-game menu with a visible arrow cursor. Hover highlights items; left-click activates; right-click goes back. Sliders respond to click position. Keyboard and gamepad still work — keyboard navigation was restored in 2.0.12.</p>
+        <span class="tag">IMPROVED IN 2.0.12</span>
+      </div>
+      <div class="feature-card">
+        <h3>CTF Conversion Wizard</h3>
+        <p>Forge guides you through turning any map into a Capture The Flag arena: flag bases (9010/9011), team spawns, distance checks, and one-click Test CTF. Pulsing map hints show where to click next.</p>
+        <span class="tag">NEW IN 2.0.11</span>
+      </div>
+      <div class="feature-card">
+        <h3>DOOM Forge Map Editor</h3>
+        <p>Draw vertices, lines, and sectors. Paint floor and ceiling textures from a thumbnail browser. Place all 126 mobj types with live sprite previews. 3D fly-through preview with WASD. Save and load PWADs without third-party tools.</p>
+        <span class="tag">BUILT-IN WAD EDITOR</span>
+      </div>
+      <div class="feature-card">
+        <h3>Mouse-Look &amp; Crosshair</h3>
+        <p>Full mouse look: turn with mouse X, pitch with mouse Y (keyboard-only movement). Relative mouse capture for smooth 360&deg; spinning. Safe pitch limits and synced renderer math keep wall textures stable when looking up or down. Optional crosshair in Options &rarr; Display.</p>
+        <span class="tag">FIXED IN 2.0.10</span>
+      </div>
+      <div class="feature-card">
+        <h3>Custom Controls</h3>
+        <p>Rebind every action from Options → Controls. One-click WASD or Arrow Key presets. Your layout saves to your per-user <code>default.cfg</code> (see Settings That Stick).</p>
+        <span class="tag">NEW IN 2.0.8</span>
+      </div>
+      <div class="feature-card">
+        <h3>Capture The Flag</h3>
+        <p>Red vs Blue team multiplayer. Grab the enemy flag, capture at your base, first to five wins. Dedicated flag-base things (9010/9011) placeable in Forge. Intermission scoreboard and automatic map restart.</p>
+        <span class="tag">MULTIPLAYER</span>
+      </div>
+      <div class="feature-card">
+        <h3>GTA-Style Radar</h3>
+        <p>Bottom-left minimap with fog-of-war — only explored walls appear, matching automap logic. Brighter player marker. Toggle in Options → Display.</p>
+        <span class="tag">HUD UPGRADE</span>
+      </div>
+      <div class="feature-card">
+        <h3>Mind Control Weapon</h3>
+        <p>Turn demons into allies with the experimental Mind Control device. Enabled from the launcher. Converted monsters fight for you — and in 2.0.12 you can still kill them with normal weapons if you change your mind. Graphics delivered via doom_extra.wad.</p>
+        <span class="tag">FIXED IN 2.0.12</span>
+      </div>
+      <div class="feature-card">
+        <h3>DOOM Launcher</h3>
+        <p>Pick IWAD and PWAD files, skill, episode, map. Network games for up to four players. <strong>CPU players</strong> for offline bot matches. <strong>Demos</strong> tab: play, record, add, remove, and rename <code>.lmp</code> files. <strong>Display Resolution</strong> and <strong>Texture Filter</strong> on the Game tab. Video renderer: Auto, OpenGL, Direct3D, or Software. Launches Forge with one click. E1M1 music while you configure.</p>
+        <span class="tag">PRE-GAME GUI</span>
+      </div>
+      <div class="feature-card">
+        <h3>Windows &amp; macOS</h3>
+        <p>Full Windows 10+ installer with Start Menu shortcuts and changelog. Native macOS .app bundles with DMG and PKG installers for the complete trilogy: game, launcher, and Forge.</p>
+        <span class="tag">CROSS-PLATFORM</span>
+      </div>
+      <div class="feature-card">
+        <h3>Cheat Code Reference</h3>
+        <p>Every classic cheat documented in CHEAT_CODES.txt — IDDQD, IDKFA, IDCLIP, level warps, message toggles, and automap secrets. Ships in the Start Menu for quick lookup.</p>
+        <span class="tag">NEW IN 2.0.10</span>
+      </div>
+      <div class="feature-card">
+        <h3>Polish &amp; Personality</h3>
+        <p>42 new rude quit messages. Redesigned in-game Options menu. Forge Win2000 classic UI. Sprite previews fixed across 126 types. Custom DoomClon icon on game, launcher, and installer.</p>
+        <span class="tag">DETAILS MATTER</span>
+      </div>
+    </div>
+
+    <div class="sidebar-note">
+      <strong>TECHNICAL NOTE:</strong> Based on the original linuxdoom 1.10 source under the id Software Source Code License. Internal rendering remains authentic 320&times;200 software DOOM — OpenGL and Direct3D accelerate presentation and upscale filtering only; they do not raise in-game texture resolution. WAD files are separately copyrighted and must be obtained legally. This port does not include shareware data.
+    </div>
+
+    <p>
+      Veteran players will appreciate the restraint: this is still <em>DOOM</em>. The same punchy gunplay, the same MIDI earworms (now via OPL emulation), the same sense that something terrible lurks behind every brown wall. But the friction is gone. No more hunting for DEU. No more guessing which thing type is the Arch-vile. No more squinting at a minimap that lies about walls you haven't seen yet.
+    </p>
+
+    <p>
+      Multiplayer specialists should prepare for CTF on custom Forge maps — place flag bases, share the PWAD, launch from the Network tab, and let the intermission screen settle arguments the old-fashioned way: with numbers and shame.
+    </p>
+
+    <h2 class="section-head">■ What Reviewers Are Screaming</h2>
+
+    <p style="font-style:italic; color:#c0b0a0; border-left:3px solid var(--gold); padding-left:16px; margin-bottom:16px;">
+      "I came for nostalgia. I stayed because I accidentally built a cathedral, populated it with 200 Imps, and CTF-tested it before lunch." — <em>Fake Computer Gaming Monthly</em>
+    </p>
+    <p style="font-style:italic; color:#c0b0a0; border-left:3px solid var(--gold); padding-left:16px; margin-bottom:16px;">
+      "The built-in editor alone is worth the install. The fact that mouse-look works on the original renderer is witchcraft." — <em>Phobos Enthusiast Quarterly</em>
+    </p>
+    <p style="font-style:italic; color:#c0b0a0; border-left:3px solid var(--gold); padding-left:16px;">
+      "Finally, a DOOM package that treats the player like they have plans." — <em>Hellmouth Herald</em>
+    </p>
+
+    <div class="cta-block" id="download">
+      <h2>THE ULTIMATE BUILD SHIPS NOW</h2>
+      <p>One installer. Three applications. A quarter-century of hell, refined.</p>
+      <a class="cta-btn" href="#download">DOWNLOAD DOOM 3.0.3</a>
+      <div class="cta-version">
+        DOOM-Setup-3.0.3.exe · Windows 10+ · Includes all WADs from build folder + AZZ_DOOM episode + CPU bots<br>
+        Installer: <strong style="color:var(--gold)">DOOM-Setup-3.0.3.exe</strong> (included with the Windows install package)
+      </div>
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <p>Windows port, launcher, and DOOM Forge by <strong>Thijs Boekholt</strong> — Copyright &copy; 2026</p>
+    <p>Original DOOM &copy; id Software, Inc. · Based on the DOOM Source Code License</p>
+    <p style="margin-top:12px;">Standalone shareable edition &middot; DOOM 3.0.3 &middot; Thijs Boekholt</p>
+  </footer>
+
+  <script>
+  (function () {
+    var STORAGE_KEY = "doom_press_release_visits_v2";
+    var SEED = 0;
+    var PAD = 7;
+    var el = document.getElementById("visitor-count");
+    if (!el) return;
+
+    var count = SEED;
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      count = stored ? parseInt(stored, 10) : SEED;
+      if (isNaN(count) || count < SEED) count = SEED;
+      count += 1;
+      localStorage.setItem(STORAGE_KEY, String(count));
+    } catch (err) {
+      count = SEED + 1;
+    }
+
+    el.textContent = String(count).padStart(PAD, "0");
+    el.classList.add("tick");
+    el.addEventListener("animationend", function () {
+      el.classList.remove("tick");
+    }, { once: true });
+  })();
+  </script>
+
+</body>
+</html>
