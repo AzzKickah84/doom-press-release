@@ -302,7 +302,7 @@
       clear: both;
     }
 
-    /* Mock screenshot frames */
+    /* Screenshot gallery */
     .screenshot-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -317,6 +317,7 @@
       overflow: hidden;
       box-shadow: 0 12px 40px rgba(0,0,0,0.6);
       transition: transform 0.2s, box-shadow 0.2s;
+      margin: 0;
     }
 
     .shot:hover {
@@ -325,10 +326,14 @@
       border-color: var(--hell-red);
     }
 
-    .shot-canvas {
+    .shot-img {
+      display: block;
+      width: 100%;
+      height: auto;
       aspect-ratio: 4/3;
-      position: relative;
-      overflow: hidden;
+      object-fit: cover;
+      object-position: top center;
+      background: #000;
     }
 
     .shot-label {
@@ -338,313 +343,6 @@
       background: var(--panel);
       color: var(--gold);
       border-top: 1px solid #3a2820;
-    }
-
-    /* In-game mock */
-    .mock-game {
-      background: linear-gradient(180deg, #1a1028 0% 35%, #3a2818 35% 65%, #2a1810 65% 100%);
-    }
-
-    .mock-game .wall-left {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 35%;
-      background: linear-gradient(90deg, #5a4030, #3a2818);
-      clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
-    }
-
-    .mock-game .wall-right {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 35%;
-      background: linear-gradient(270deg, #4a3020, #2a1810);
-      clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
-    }
-
-    .mock-game .enemy {
-      position: absolute;
-      left: 50%; top: 42%;
-      transform: translateX(-50%);
-      width: 48px; height: 64px;
-      background: radial-gradient(ellipse, #6a2020 30%, #3a0808 70%);
-      border-radius: 50% 50% 40% 40%;
-      box-shadow: 0 0 20px rgba(255,0,0,0.4);
-    }
-
-    .mock-game .enemy::before {
-      content: "";
-      position: absolute;
-      top: 18px; left: 10px;
-      width: 8px; height: 8px;
-      background: #ff4400;
-      border-radius: 50%;
-      box-shadow: 22px 0 0 #ff4400;
-    }
-
-    .mock-game .crosshair {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 20px; height: 20px;
-    }
-
-    .mock-game .crosshair::before,
-    .mock-game .crosshair::after {
-      content: "";
-      position: absolute;
-      background: rgba(180,180,180,0.8);
-    }
-
-    .mock-game .crosshair::before {
-      left: 50%; top: 2px; bottom: 2px;
-      width: 2px;
-      transform: translateX(-50%);
-    }
-
-    .mock-game .crosshair::after {
-      top: 50%; left: 2px; right: 2px;
-      height: 2px;
-      transform: translateY(-50%);
-    }
-
-    .mock-game .hud-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 18%;
-      background: linear-gradient(180deg, #4a3020, #2a1810);
-      border-top: 3px solid #6a5040;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      gap: 16px;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 0.55rem;
-      color: var(--green-hud);
-    }
-
-    .mock-game .radar {
-      position: absolute;
-      bottom: 22%; left: 8px;
-      width: 64px; height: 64px;
-      background: #1a2818;
-      border: 2px solid #3a5030;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    .mock-game .radar::after {
-      content: "";
-      position: absolute;
-      inset: 30%;
-      background: #ffcc00;
-      border-radius: 50%;
-      box-shadow: 0 0 6px #fff;
-    }
-
-    .mock-game .radar-line {
-      position: absolute;
-      inset: 0;
-      background: conic-gradient(from 0deg, transparent 0deg, rgba(80,200,80,0.3) 30deg, transparent 60deg);
-      animation: radar-sweep 3s linear infinite;
-    }
-
-    @keyframes radar-sweep {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Forge mock */
-    .mock-forge {
-      background: #c0c0c0;
-      display: grid;
-      grid-template-rows: 28px 1fr 24px;
-    }
-
-    .mock-forge .titlebar {
-      background: linear-gradient(180deg, #000080, #000060);
-      color: #fff;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 0.6rem;
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      gap: 6px;
-    }
-
-    .mock-forge .titlebar span {
-      width: 10px; height: 10px;
-      background: #c0c0c0;
-      border: 1px solid #808080;
-    }
-
-    .mock-forge .workspace {
-      display: grid;
-      grid-template-columns: 1fr 120px;
-      gap: 4px;
-      padding: 4px;
-      background: #808080;
-    }
-
-    .mock-forge .map {
-      background: #fff;
-      position: relative;
-      border: 2px inset #c0c0c0;
-    }
-
-    .mock-forge .map .room {
-      position: absolute;
-      border: 2px solid #cc0000;
-      background: rgba(200,200,255,0.3);
-    }
-
-    .mock-forge .map .room:nth-child(1) { left: 15%; top: 20%; width: 35%; height: 40%; }
-    .mock-forge .map .room:nth-child(2) { left: 45%; top: 35%; width: 30%; height: 35%; }
-    .mock-forge .map .room:nth-child(3) { left: 25%; top: 55%; width: 25%; height: 25%; }
-
-    .mock-forge .map .thing {
-      position: absolute;
-      width: 8px; height: 8px;
-      background: #00aa00;
-      border-radius: 50%;
-    }
-
-    .mock-forge .map .thing:nth-child(4) { left: 30%; top: 38%; }
-    .mock-forge .map .thing:nth-child(5) { left: 55%; top: 48%; background: #aa0000; }
-    .mock-forge .map .thing:nth-child(6) { left: 38%; top: 65%; background: #aaaa00; }
-
-    .mock-forge .palette {
-      background: #c0c0c0;
-      border: 2px inset #c0c0c0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-      padding: 4px;
-      font-size: 0.45rem;
-      text-align: center;
-      color: #000;
-      font-family: Consolas, "Courier New", monospace;
-    }
-
-    .mock-forge .palette div {
-      background: #fff;
-      border: 1px solid #808080;
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .mock-forge .statusbar {
-      background: #c0c0c0;
-      border-top: 2px outset #c0c0c0;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 0.5rem;
-      color: #000;
-      padding: 0 8px;
-      display: flex;
-      align-items: center;
-    }
-
-    /* Launcher mock */
-    .mock-launcher {
-      background: linear-gradient(180deg, #941400, #480800 40%, #3a2e22 40%);
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .mock-launcher .logo {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      font-weight: 900;
-      font-size: 1.4rem;
-      color: #ff8800;
-      text-shadow: 2px 2px 0 #000;
-      letter-spacing: 0.15em;
-    }
-
-    .mock-launcher .panel {
-      background: rgba(60,46,34,0.9);
-      border: 2px solid #785838;
-      border-radius: 4px;
-      padding: 10px;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 0.55rem;
-      color: #ffc864;
-    }
-
-    .mock-launcher .btn-row {
-      display: flex;
-      gap: 6px;
-      margin-top: auto;
-    }
-
-    .mock-launcher .btn {
-      flex: 1;
-      background: linear-gradient(180deg, #c42000, #801000);
-      border: 2px solid #ff6040;
-      color: #ffd080;
-      text-align: center;
-      padding: 6px 4px;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      font-size: 0.5rem;
-      font-weight: 700;
-      border-radius: 3px;
-    }
-
-    /* CTF mock */
-    .mock-ctf {
-      background: linear-gradient(180deg, #0a0a18, #1a1028);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 16px;
-    }
-
-    .mock-ctf .scoreboard {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      text-align: center;
-      width: 100%;
-    }
-
-    .mock-ctf .scoreboard h3 {
-      font-size: 0.7rem;
-      color: var(--gold);
-      letter-spacing: 0.2em;
-      margin-bottom: 12px;
-    }
-
-    .mock-ctf .teams {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-    }
-
-    .mock-ctf .team {
-      text-align: center;
-    }
-
-    .mock-ctf .team.red .flag { color: #ff3333; }
-    .mock-ctf .team.blue .flag { color: #4488ff; }
-
-    .mock-ctf .flag {
-      font-size: 2rem;
-      margin-bottom: 4px;
-    }
-
-    .mock-ctf .captures {
-      font-size: 1.8rem;
-      font-weight: 900;
-    }
-
-    .mock-ctf .team.red .captures { color: #ff4444; }
-    .mock-ctf .team.blue .captures { color: #4488ff; }
-
-    .mock-ctf .vs {
-      font-size: 1.2rem;
-      color: #666;
-      align-self: center;
     }
 
     /* Feature cards */
@@ -889,80 +587,23 @@
 
     <div class="screenshot-grid">
       <figure class="shot">
-        <div class="shot-canvas mock-game">
-          <div class="wall-left"></div>
-          <div class="wall-right"></div>
-          <div class="enemy"></div>
-          <div class="crosshair"></div>
-          <div class="radar"><div class="radar-line"></div></div>
-          <div class="hud-bar">
-            <span>AMMO 50</span>
-            <span>HEALTH 100%</span>
-            <span>ARMOR 0%</span>
-            <span style="margin-left:auto;color:#ff8800">MOUSE-LOOK ON</span>
-          </div>
-        </div>
-        <figcaption class="shot-label">IN-GAME — Mouse-look, crosshair, radar minimap, classic HUD</figcaption>
+        <img class="shot-img" src="screenshots/mainmenu.png" alt="DOOM in-game on E1M1 with radar minimap and classic HUD" width="1280" height="800" loading="lazy">
+        <figcaption class="shot-label">IN-GAME — E1M1 gameplay, radar minimap, classic status bar</figcaption>
       </figure>
 
       <figure class="shot">
-        <div class="shot-canvas mock-forge">
-          <div class="titlebar"><span></span><span></span><span></span> DOOM Forge 3.1 — E1M1_CUSTOM.WAD</div>
-          <div class="workspace">
-            <div class="map">
-              <div class="room"></div>
-              <div class="room"></div>
-              <div class="room"></div>
-              <div class="thing"></div>
-              <div class="thing"></div>
-              <div class="thing"></div>
-            </div>
-            <div class="palette">
-              <div>IMP</div><div>SGN</div><div>MED</div>
-              <div>KEY</div><div>BAR</div><div>CYB</div>
-              <div>9010</div><div>9011</div><div>+99</div>
-            </div>
-          </div>
-          <div class="statusbar">126 thing types loaded · Grid: ON · Snap: ON · Sector 3 selected</div>
-        </div>
-        <figcaption class="shot-label">DOOM FORGE — Built-in WAD editor with full thing catalog</figcaption>
+        <img class="shot-img" src="screenshots/forge.png" alt="DOOM Forge map editor with E1M1 loaded and texture library" width="1280" height="800" loading="lazy">
+        <figcaption class="shot-label">DOOM FORGE — Built-in WAD editor, E1M1 loaded, texture library</figcaption>
       </figure>
 
       <figure class="shot">
-        <div class="shot-canvas mock-launcher">
-          <div class="logo">DOOM LAUNCHER</div>
-          <div class="panel">IWAD: doom.wad &nbsp;|&nbsp; SKILL: Ultra-Violence &nbsp;|&nbsp; MAP: E1M1</div>
-          <div class="panel">PWAD: hellfort.wad &nbsp;|&nbsp; ☑ Ally Weapon &nbsp;|&nbsp; ☑ CTF Mode</div>
-          <div class="panel">NETWORK: 4 players · Port 5029 · Renderer: OpenGL · DEMOS tab</div>
-          <div class="btn-row">
-            <div class="btn">PLAY DOOM</div>
-            <div class="btn">MAP FORGE</div>
-            <div class="btn">CHANGELOG</div>
-          </div>
-        </div>
-        <figcaption class="shot-label">DOOM LAUNCHER — IWAD/PWAD, multiplayer, video options</figcaption>
+        <img class="shot-img" src="screenshots/launcher.png" alt="DOOM Launcher with IWAD selection and game options" width="1280" height="800" loading="lazy">
+        <figcaption class="shot-label">DOOM LAUNCHER — IWAD/PWAD, skill, resolution, OpenGL renderer</figcaption>
       </figure>
 
       <figure class="shot">
-        <div class="shot-canvas mock-ctf">
-          <div class="scoreboard">
-            <h3>— CTF INTERMISSION —</h3>
-            <div class="teams">
-              <div class="team red">
-                <div class="flag">🚩</div>
-                <div class="captures">5</div>
-                <div style="font-size:0.6rem;color:#ff6666">RED TEAM WINS</div>
-              </div>
-              <div class="vs">VS</div>
-              <div class="team blue">
-                <div class="flag">🚩</div>
-                <div class="captures">3</div>
-                <div style="font-size:0.6rem;color:#6688ff">BLUE TEAM</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <figcaption class="shot-label">CAPTURE THE FLAG — Team scores, auto map restart</figcaption>
+        <img class="shot-img" src="screenshots/ingame.png" alt="DOOM main menu with two-column layout" width="1280" height="800" loading="lazy">
+        <figcaption class="shot-label">MAIN MENU — Two-column layout, every option visible (3.0.4)</figcaption>
       </figure>
     </div>
 
