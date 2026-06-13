@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Self-contained press release: CSS inline, DOOM logo embedded as base64. Open this one file in any browser; no other assets needed. -->
   <title>BREAKING: The Ultimate DOOM Arrives — Built-In Map Editor, CTF, Mouse-Look &amp; More</title>
-<style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DSEG7+Classic:wght@700&display=swap" rel="stylesheet">
+  <style>
     :root {
       --hell-red: #cc0000;
       --blood: #8b0000;
@@ -27,7 +29,7 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: Georgia, "Times New Roman", Times, serif;
+      font-family: "Libre Baskerville", Georgia, serif;
       background: var(--ash);
       color: var(--bone);
       line-height: 1.65;
@@ -54,7 +56,7 @@
     .ticker {
       background: var(--hell-red);
       color: #fff;
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.78rem;
       padding: 8px 0;
       overflow: hidden;
@@ -96,7 +98,7 @@
     .masthead::after { right: 24px; }
 
     .paper-name {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: clamp(0.65rem, 2vw, 0.85rem);
       letter-spacing: 0.45em;
       color: var(--gold);
@@ -131,7 +133,7 @@
     }
 
     .counter-label {
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.62rem;
       letter-spacing: 0.32em;
       color: #3d5c28;
@@ -160,7 +162,7 @@
     }
 
     .counter-digits {
-      font-family: "DSEG7 Classic", Consolas, "Courier New", monospace;
+      font-family: "DSEG7 Classic", "Share Tech Mono", monospace;
       font-size: clamp(1.5rem, 5.5vw, 2.2rem);
       font-weight: 700;
       color: #39ff14;
@@ -196,7 +198,7 @@
       padding: 14px 24px;
       background: var(--smoke);
       border-bottom: 1px solid #3a3028;
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.8rem;
       color: #908070;
     }
@@ -208,7 +210,7 @@
       background: var(--ember);
       color: #fff;
       padding: 2px 10px;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 0.7rem;
       letter-spacing: 0.15em;
       animation: pulse-badge 1.5s ease-in-out infinite;
@@ -228,7 +230,7 @@
     }
 
     .headline {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-weight: 700;
       font-size: clamp(1.6rem, 4.5vw, 2.6rem);
       line-height: 1.2;
@@ -266,7 +268,7 @@
 
     .lede::first-letter {
       float: left;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 4.2rem;
       line-height: 0.85;
       color: var(--hell-red);
@@ -282,7 +284,7 @@
       background: linear-gradient(135deg, #2a1010, #1a0808);
       border: 2px solid var(--hell-red);
       border-radius: 4px;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--gold);
@@ -294,7 +296,7 @@
     p { margin-bottom: 1.2em; }
 
     h2.section-head {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 1.1rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -340,7 +342,7 @@
     }
 
     .shot-label {
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.72rem;
       padding: 8px 12px;
       background: var(--panel);
@@ -368,7 +370,7 @@
     .feature-card:hover { border-left-color: var(--gold); }
 
     .feature-card h3 {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 0.85rem;
       color: var(--gold);
       margin-bottom: 8px;
@@ -384,7 +386,7 @@
     .feature-card .tag {
       display: inline-block;
       margin-top: 10px;
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.65rem;
       background: rgba(204,0,0,0.2);
       color: var(--ember);
@@ -409,7 +411,7 @@
     }
 
     .stat .num {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 2rem;
       font-weight: 900;
       color: var(--hell-red);
@@ -418,7 +420,7 @@
     }
 
     .stat .label {
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.7rem;
       color: #807060;
       margin-top: 4px;
@@ -443,7 +445,7 @@
     .cta-block::before {
       content: "DOOM";
       position: absolute;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 12rem;
       font-weight: 900;
       color: rgba(255,0,0,0.04);
@@ -453,7 +455,7 @@
     }
 
     .cta-block h2 {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-size: 1.4rem;
       color: #fff;
       margin-bottom: 12px;
@@ -468,7 +470,7 @@
 
     .cta-btn {
       display: inline-block;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      font-family: "Orbitron", sans-serif;
       font-weight: 700;
       font-size: 0.95rem;
       letter-spacing: 0.15em;
@@ -489,7 +491,7 @@
     }
 
     .cta-version {
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.8rem;
       color: var(--gold);
       margin-top: 16px;
@@ -501,7 +503,7 @@
       border: 1px dashed #4a3828;
       padding: 16px;
       margin: 28px 0;
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.8rem;
       color: #807060;
     }
@@ -513,7 +515,7 @@
       padding: 32px 24px;
       background: #0a0808;
       border-top: 2px solid #2a1810;
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Share Tech Mono", monospace;
       font-size: 0.75rem;
       color: #605040;
     }
@@ -541,7 +543,7 @@
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-inner">
-      ★ UAC CONFIRMS: DOOM 3.0.4s NOW SHIPPING ★ SHAREWARE EDITION ★ PUBLIC DOWNLOAD ON GITHUB ★ INSTALLER: DOOM-Setup-3.0.4s.exe ★
+      ★ UAC CONFIRMS: DOOM 3.0.5 NOW SHIPPING ★ FULL + SHAREWARE BUILDS ★ PUBLIC DOWNLOAD ON GITHUB ★ INSTALLERS: DOOM-Setup-3.0.5.exe &amp; DOOM-Setup-3.0.5s.exe ★
     </div>
   </div>
 
@@ -560,7 +562,7 @@
   <div class="meta-bar">
     <span><span class="breaking">BREAKING</span> HELL, MARS — 13 JUNE 2026</span>
     <span>SECTION: <strong>GAMES / TECHNOLOGY</strong></span>
-    <span>EDITION: <strong>DOOM 3.0.4s</strong></span>
+    <span>EDITION: <strong>DOOM 3.0.5</strong></span>
     <span>BY: <strong>THIJS BOEKHOLT</strong></span>
   </div>
 
@@ -579,7 +581,7 @@
     </div>
 
     <p class="lede">
-      In what industry insiders are already calling "the shot heard across Phobos," a lone developer operating out of a classified Windows laboratory has done the impossible: taken the legendary 1993 demon-slaughter simulator, bolted on a full graphical map editor, modern mouse-look, multiplayer Capture The Flag, demo recording, mouse-driven menus, customizable display resolution with optional smooth upscaling, persistent per-user settings, a complete WAD bundle including the AZZ_DOOM episode, CPU player bots for solo deathmatch and co-op, and enough quality-of-life upgrades to make a Cyberdemon weep. <strong>DOOM 3.0.4</strong> fixes the main menu so every option &mdash; including Quit Game &mdash; is visible in a clean two-column layout, and ships a public download on GitHub Pages. <strong>DOOM 3.0.3</strong> brought back the authentic DOS boot experience and <strong>DOOM Forge 3.1</strong> with sector fills, undo/redo, texture search, and full map-editing polish. This is <strong>DOOM 3.0.4</strong> &mdash; and it is magnificent.
+      In what industry insiders are already calling "the shot heard across Phobos," a lone developer operating out of a classified Windows laboratory has done the impossible: taken the legendary 1993 demon-slaughter simulator, bolted on a full graphical map editor, modern mouse-look, multiplayer Capture The Flag, demo recording, mouse-driven menus, customizable display resolution with optional smooth upscaling, persistent per-user settings, a complete WAD bundle including the AZZ_DOOM episode, CPU player bots for solo deathmatch and co-op, and enough quality-of-life upgrades to make a Cyberdemon weep. <strong>DOOM 3.0.5</strong> fixes CPU bot deathmatch damage (the green marine bot can finally frag you) and corrects swapped press-release screenshots. <strong>DOOM 3.0.4</strong> fixed the main menu two-column layout. This is <strong>DOOM 3.0.5</strong> &mdash; and it is magnificent.
     </p>
 
     <blockquote class="pull-quote">
@@ -598,7 +600,7 @@
 
     <div class="screenshot-grid">
       <figure class="shot">
-        <img class="shot-img" src="screenshots/mainmenu.png" alt="DOOM in-game on E1M1 with radar minimap and classic HUD" width="1280" height="800" loading="lazy">
+        <img class="shot-img" src="screenshots/ingame.png" alt="DOOM in-game on E1M1 with radar minimap and classic HUD" width="1280" height="800" loading="lazy">
         <figcaption class="shot-label">IN-GAME — E1M1 gameplay, radar minimap, classic status bar</figcaption>
       </figure>
 
@@ -613,8 +615,8 @@
       </figure>
 
       <figure class="shot">
-        <img class="shot-img" src="screenshots/ingame.png" alt="DOOM main menu with two-column layout" width="1280" height="800" loading="lazy">
-        <figcaption class="shot-label">MAIN MENU — Two-column layout, every option visible (3.0.4)</figcaption>
+        <img class="shot-img" src="screenshots/mainmenu.png" alt="DOOM main menu with two-column layout" width="1280" height="800" loading="lazy">
+        <figcaption class="shot-label">MAIN MENU — Two-column layout, every option visible (3.0.4+)</figcaption>
       </figure>
     </div>
 
@@ -628,6 +630,11 @@
     <h2 class="section-head">■ The Arsenal — Everything New &amp; Improved</h2>
 
     <div class="features">
+      <div class="feature-card">
+        <h3>Bot Deathmatch Damage Fix</h3>
+        <p>CPU opponents in VS CPU deathmatch now deal full weapon damage. Player 2&rsquo;s green marine colour translation no longer collides with the mind-control ally flag &mdash; you are not invincible anymore.</p>
+        <span class="tag">NEW IN 3.0.5</span>
+      </div>
       <div class="feature-card">
         <h3>Two-Column Main Menu</h3>
         <p>Every main-menu item now fits on screen in a balanced two-column layout &mdash; New Game, Options, Load/Save, demos, VS CPU, Read This, and Quit Game are all visible and clickable. Keyboard and mouse navigation follow the grid.</p>
@@ -799,13 +806,16 @@
       "Finally, a DOOM package that treats the player like they have plans." — <em>Hellmouth Herald</em>
     </p>
 
-    <div class="cta-block" id="download">
+    <div class="cta-block">
       <h2>THE ULTIMATE BUILD SHIPS NOW</h2>
       <p>One installer. Three applications. A quarter-century of hell, refined.</p>
-      <a class="cta-btn" href="https://github.com/AzzKickah84/doom-press-release/releases/download/v3.0.4s/DOOM-Setup-3.0.4s.exe">DOWNLOAD DOOM 3.0.4s (SHAREWARE)</a>
+      <a class="cta-btn" href="https://github.com/AzzKickah84/doom-press-release/releases/download/v3.0.5/DOOM-Setup-3.0.5.exe">DOWNLOAD DOOM 3.0.5 (FULL)</a>
+      <a class="cta-btn" href="https://github.com/AzzKickah84/doom-press-release/releases/download/v3.0.5s/DOOM-Setup-3.0.5s.exe" style="margin-top:12px;">DOWNLOAD DOOM 3.0.5s (SHAREWARE)</a>
       <div class="cta-version">
-        DOOM-Setup-3.0.4s.exe · Windows 10+ · Shareware edition with doom1.wad (Episode 1) + AZZ_DOOM episode + CPU bots<br>
-        Direct download: <strong style="color:var(--gold)">DOOM-Setup-3.0.4s.exe</strong> (~5.6 MB)
+        DOOM-Setup-3.0.5.exe · Windows 10+ · Full edition with all WADs from the build folder<br>
+        DOOM-Setup-3.0.5s.exe · Shareware edition with doom1.wad (Episode 1) + AZZ_DOOM episode + CPU bots<br>
+        Direct download: <strong style="color:var(--gold)">DOOM-Setup-3.0.5.exe</strong> (~10.8 MB) &middot; <strong style="color:var(--gold)">DOOM-Setup-3.0.5s.exe</strong> (~5.6 MB)
+        Also read: <a href="changelog.html" style="color:var(--gold)">Full Changelog</a> &middot; <a href="press-release.html" style="color:var(--gold)">This Article</a>
       </div>
     </div>
 
@@ -814,7 +824,7 @@
   <footer class="site-footer">
     <p>Windows port, launcher, and DOOM Forge by <strong>Thijs Boekholt</strong> — Copyright &copy; 2026</p>
     <p>Original DOOM &copy; id Software, Inc. · Based on the DOOM Source Code License</p>
-    <p style="margin-top:12px;">Standalone shareable edition &middot; DOOM 3.0.4s &middot; Thijs Boekholt</p>
+    <p style="margin-top:12px;"><a href="changelog.html">Changelog</a> · <a href="README_WINDOWS.txt">Windows README</a> · <a href="press-release.html">This Article</a></p>
   </footer>
 
   <script>
