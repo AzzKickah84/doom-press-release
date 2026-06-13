@@ -85,10 +85,34 @@
 <body>
   <header>
     <h1>DOOM Windows Port</h1>
-    <p class="subtitle">Changelog &mdash; current release <strong>3.0.6</strong> &mdash; port by Thijs Boekholt</p>
+    <p class="subtitle">Changelog &mdash; current release <strong>3.0.7</strong> &mdash; port by Thijs Boekholt</p>
   </header>
 
   <main>
+    <section>
+      <div class="release-header">
+        <span class="version">Version 3.0.7</span>
+        <span class="date">13 June 2026</span>
+      </div>
+      <div class="release-body">
+        <h2>Improved</h2>
+        <ul>
+          <li><strong>Launcher readability</strong> &mdash; section and tab labels use brighter cream text on the brown panels instead of hard-to-read gold. IWAD/PWAD headers use clean Segoe UI bold rather than scaled STCFN glyphs.</li>
+          <li><strong>Original DOOM logo</strong> &mdash; the header now shows the classic M_DOOM menu logo (<code>assets/doom-logo.png</code>) beside the LAUNCHER title.</li>
+        </ul>
+        <h2>Fixed</h2>
+        <ul>
+          <li><strong>Launcher overlapping text</strong> &mdash; header logo, LAUNCHER title, and version/copyright no longer collide; IWAD/PWAD labels are single Win32 controls instead of double-painted WAD font overlays.</li>
+        </ul>
+        <h2>Build</h2>
+        <ul>
+          <li>Full installer: <code>DOOM-Setup-3.0.7.exe</code> (all WADs from the build folder).</li>
+          <li>Shareware installer: <code>DOOM-Setup-3.0.7s.exe</code> (doom1.wad only).</li>
+          <li>Windows file version metadata bumped to 3.0.7 on all executables.</li>
+        </ul>
+      </div>
+    </section>
+
     <section>
       <div class="release-header">
         <span class="version">Version 3.0.6</span>
